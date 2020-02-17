@@ -19,13 +19,14 @@ def index(request):
     context_dict['categories'] = category_list
     context_dict['pages'] = page_list
     visitor_cookie_handler(request)
-    context_dict['visits'] = int(request.session['visits'])
 
     response = render(request, 'rango/index.html', context=context_dict)
     return response
 
 def about(request):
-    return render(request, 'rango/about.html')
+    visitor_cookie_handler(request)
+    visits = int(request.session['visits'])
+    return render(request, 'rango/about.html', context={'visits': visits})
 
 def show_category(request, category_name_slug):
     context_dict = {}
